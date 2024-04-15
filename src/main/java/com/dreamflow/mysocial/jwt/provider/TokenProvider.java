@@ -1,8 +1,10 @@
 package com.dreamflow.mysocial.jwt.provider;
 
+import com.dreamflow.mysocial.global.common.BaseException;
 import com.dreamflow.mysocial.jwt.dto.MemberDetails;
 import com.dreamflow.mysocial.jwt.dto.UserDetailDto;
 import com.dreamflow.mysocial.jwt.entity.Token;
+import com.dreamflow.mysocial.jwt.exception.JwtErrorCode;
 import com.dreamflow.mysocial.member.entity.Member;
 import com.dreamflow.mysocial.member.repository.MemberRepository;
 import com.dreamflow.mysocial.member.service.MemberTokenService;
@@ -10,9 +12,9 @@ import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
-import lombok.Value;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -43,10 +45,10 @@ public class TokenProvider implements InitializingBean {
     @Value("${jwt.secret}")
     private String secret;
 
-    @Value("3600000")
+    @Value("${jwt.token-validity-in-seconds}")
     private long tokenValidityInMilliseconds;
 
-    @Value("3600000")
+    @Value("${jwt.token-refresh-in-seconds}")
     private long refreshTokenValidityInMilliseconds;
 
     private final MemberTokenService memberTokenService;

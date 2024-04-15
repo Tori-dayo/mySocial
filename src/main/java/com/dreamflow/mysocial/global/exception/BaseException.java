@@ -1,4 +1,4 @@
-package com.dreamflow.mysocial.global;
+package com.dreamflow.mysocial.global.exception;
 
 import lombok.Getter;
 
