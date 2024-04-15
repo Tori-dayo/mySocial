@@ -16,16 +16,16 @@ import java.util.Optional;
 @Transactional
 public class PostService {
     private final PostRepository postRepository;
-    private final PostMapper postMapper;
-    public Post createPost(PostDto.Post postDto) {
-        Post post = postMapper.toEntity(postDto);
+    public Post createPost(Post post) {
         return postRepository.save(post);
     }
 
-    public Post patchPost(Long id, PostDto.Patch postDto) {
-        Post post = findVerifiedPost(id);
-        post = postMapper.toEntity(postDto);
-        return postRepository.save(post);
+    public Post patchPost(Long id, Post post) {
+        Post findPost = findVerifiedPost(id);
+        findPost.setContent(post.getContent());
+        findPost.setTitle(post.getTitle());
+        findPost.setImageUrl(post.getImageUrl());
+        return postRepository.save(findPost);
     }
 
     public void deletePost(Long id) {

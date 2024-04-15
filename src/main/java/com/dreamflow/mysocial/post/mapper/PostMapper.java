@@ -4,11 +4,14 @@ import com.dreamflow.mysocial.post.dto.PostDto;
 import com.dreamflow.mysocial.post.entity.Post;
 import org.mapstruct.Mapper;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring")
 public interface PostMapper {
-    Post toEntity(PostDto.Post postDto);
-    Post toEntity(PostDto.Patch postDto);
+        Post postPostDtoToPost(PostDto.Post postDto);
+        Post postPatchDtoToPost(PostDto.Patch postDto);
 
-    //PostDto.Response(Post post);
+        PostDto.Response postToPostResponseDto(Post post);
 
-}
+        List<PostDto.Response> postsToPostListResponseDto(List<Post> posts);
+    }

@@ -7,7 +7,6 @@ import lombok.Setter;
 
 public class PostDto {
     @Getter
-    @NoArgsConstructor
     @AllArgsConstructor
     public static class Post{
         private String title;
@@ -15,18 +14,29 @@ public class PostDto {
         private String imageUrl;
     }
     @Getter
-    @NoArgsConstructor
     @AllArgsConstructor
     public static class Patch{
         private String title;
         private String content;
         private String imageUrl;
     }
-//    @Getter
-//    @Setter
-//    @NoArgsConstructor
-//    @AllArgsConstructor
-//    public static class Response{
-//
-//    }
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class Response{
+        private String title;
+        private String content;
+        private String imageUrl;
+    }
+
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class ListResponse{
+        private String title;
+        private String content;
+        private String imageUrl;
+    }
 }
