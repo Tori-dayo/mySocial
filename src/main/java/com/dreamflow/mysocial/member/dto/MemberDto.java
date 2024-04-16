@@ -1,9 +1,13 @@
 package com.dreamflow.mysocial.member.dto;
 
+import com.dreamflow.mysocial.content.dto.ContentDto;
+import com.dreamflow.mysocial.content.entity.Content;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 public class MemberDto {
 
@@ -26,6 +30,16 @@ public class MemberDto {
     public static class SignUpResponse {
         String accessToken;
         String refreshToken;
+    }
+
+    @Getter @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class Response{
+        String email;
+        String name;
+        List<ContentDto.Response> contents;
+
     }
 
 }

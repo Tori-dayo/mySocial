@@ -5,6 +5,7 @@ import com.dreamflow.mysocial.comment.entity.Comment;
 import com.dreamflow.mysocial.comment.mapper.CommentMapper;
 import com.dreamflow.mysocial.comment.service.CommentService;
 import com.dreamflow.mysocial.global.common.BaseResponse;
+import com.dreamflow.mysocial.global.common.CurrentUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,8 +19,8 @@ public class CommentController{
     private final CommentMapper commentMapper;
 
     @PostMapping("/{content-id}")
-    public BaseResponse<CommentDto.Response> createComment(@PathVariable("content-id") Long id, @RequestBody CommentDto.Post post) {
-        return new BaseResponse<>(commentMapper.CommentToCommentResponseDto(commentService.createComment(id, commentMapper.CommentPostDtoToComment(post))));
+    public BaseResponse<CommentDto.Response> createComment(@PathVariable("content-id") Long id, @RequestBody CommentDto.Post post, @CurrentUser Long memberId) {
+        return new BaseResponse<>(commentMapper.CommentToCommentResponseDto(commentService.createComment(id, commentMapper.CommentPostDtoToComment(post), memberId)));
     }
 
     @PatchMapping("/{comment-id}")

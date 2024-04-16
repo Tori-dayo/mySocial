@@ -4,6 +4,8 @@ import com.dreamflow.mysocial.content.entity.Content;
 import com.dreamflow.mysocial.content.exception.ContentErrorCode;
 import com.dreamflow.mysocial.content.repository.ContentRepository;
 import com.dreamflow.mysocial.global.exception.BaseException;
+import com.dreamflow.mysocial.member.exception.MemberErrorCode;
+import com.dreamflow.mysocial.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,8 +19,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ContentService {
     private final ContentRepository contentRepository;
+    private final MemberRepository memberRepository;
 
-    public Content createContent(Content content, MultipartFile image) throws IOException {
+    public Content createContent(Content content, MultipartFile image, Long id) throws IOException {
+        content.setMember(memberRepository.findById(id).orElseThrow(()->new BaseException(MemberErrorCode.NOT_FOUND_MEMBER)));
         return contentRepository.save(content);
     }
 

@@ -5,6 +5,7 @@ import com.dreamflow.mysocial.content.entity.Content;
 import com.dreamflow.mysocial.content.mapper.ContentMapper;
 import com.dreamflow.mysocial.content.service.ContentService;
 import com.dreamflow.mysocial.global.common.BaseResponse;
+import com.dreamflow.mysocial.global.common.CurrentUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,8 +21,9 @@ public class ContentController {
 
     @PostMapping("/create")
     public BaseResponse<ContentDto.Response> createContent(@RequestPart ContentDto.Post post,
-                                                           @RequestPart(value = "image", required = false) MultipartFile image ) throws IOException {
-        Content content = contentService.createContent(contentMapper.ContentPostDtoToContent(post), image);
+                                                           @RequestPart(value = "image", required = false) MultipartFile image,
+                                                           @CurrentUser Long id) throws IOException {
+        Content content = contentService.createContent(contentMapper.ContentPostDtoToContent(post), image,id);
         return new BaseResponse<>(contentMapper.ContentToContentResponseDto(content));
     }
 

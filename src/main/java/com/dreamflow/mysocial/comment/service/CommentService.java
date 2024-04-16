@@ -17,8 +17,9 @@ import java.util.List;
 public class CommentService {
     private final CommentRepository commentRepository;
     private final ContentService contentService;
-    public Comment createComment(Long id, Comment comment) {
+    public Comment createComment(Long id, Comment comment,Long memberId) {
         comment.setContent(contentService.findVerifiedContent(id));
+        comment.setMember(contentService.findVerifiedContent(id).getMember());
         return commentRepository.save(comment);
     }
 

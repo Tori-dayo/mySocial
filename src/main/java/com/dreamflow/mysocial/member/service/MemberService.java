@@ -63,6 +63,11 @@ public class MemberService {
         return id;
     }
 
+    public Member findMember(Long id) {
+        return memberRepository.findById(id)
+                .orElseThrow(() -> BaseException.type(MemberErrorCode.NOT_FOUND_MEMBER));
+    }
+
     private Token generateToken(Long id, String email, String password) {
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(email, password);

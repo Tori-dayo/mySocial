@@ -1,5 +1,6 @@
 package com.dreamflow.mysocial.member.controller;
 
+import com.dreamflow.mysocial.global.common.BaseResponse;
 import com.dreamflow.mysocial.jwt.entity.Token;
 import com.dreamflow.mysocial.member.dto.MemberDto;
 import com.dreamflow.mysocial.member.entity.Member;
@@ -7,10 +8,7 @@ import com.dreamflow.mysocial.member.mapper.MemberMapper;
 import com.dreamflow.mysocial.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -36,6 +34,12 @@ public class MemberController {
     @PostMapping("/withdrawal")
     public ResponseEntity<Long> withdrawal(@RequestBody Long id) {
         return ResponseEntity.ok(memberService.withdrawal(id));
+    }
+
+    @GetMapping("/{id}")
+    public BaseResponse<MemberDto.Response> findMember(@PathVariable Long id) {
+
+        return new BaseResponse<>(memberMapper.MemberToMemberResponseDto(memberService.findMember(id)));
     }
 
 }
