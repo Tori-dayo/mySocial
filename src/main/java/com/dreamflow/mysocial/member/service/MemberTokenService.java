@@ -22,8 +22,7 @@ public class MemberTokenService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        Member member = memberRepository.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException(email));
+        Member member = memberRepository.findByEmail(email);
 
         return new MemberDetails(new UserDetailDto(
                 member.getId(),

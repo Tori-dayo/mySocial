@@ -12,6 +12,7 @@ import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,7 +30,6 @@ import java.security.Key;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import static com.dreamflow.mysocial.member.entity.Password.ENCODER;
@@ -38,7 +38,7 @@ import static com.dreamflow.mysocial.member.entity.Password.ENCODER;
 @RequiredArgsConstructor
 public class TokenProvider implements InitializingBean {
 
-    private final Logger logger = (Logger) LoggerFactory.getLogger(TokenProvider.class);
+    private final Logger logger = LoggerFactory.getLogger(TokenProvider.class);
 
     private static final String AUTHORITIES_KEY = "auth";
 
