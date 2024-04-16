@@ -1,11 +1,14 @@
-package com.dreamflow.mysocial.post.dto;
+package com.dreamflow.mysocial.content.dto;
 
+import com.dreamflow.mysocial.comment.dto.CommentDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-public class PostDto {
+import java.util.List;
+
+public class ContentDto {
     @Getter
     @AllArgsConstructor
     public static class Post{
@@ -28,6 +31,7 @@ public class PostDto {
         private String title;
         private String content;
         private String imageUrl;
+        private List<CommentDto.ResponseList> comments;
     }
 
     @Getter

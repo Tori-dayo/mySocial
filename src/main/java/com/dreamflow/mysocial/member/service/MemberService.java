@@ -9,7 +9,6 @@ import com.dreamflow.mysocial.member.dto.MemberDto;
 import com.dreamflow.mysocial.member.entity.Member;
 import com.dreamflow.mysocial.member.exception.MemberErrorCode;
 import com.dreamflow.mysocial.member.repository.MemberRepository;
-import com.dreamflow.mysocial.post.entity.Post;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
