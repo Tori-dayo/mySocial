@@ -7,7 +7,6 @@ import com.dreamflow.mysocial.jwt.provider.TokenProvider;
 import com.dreamflow.mysocial.jwt.repository.TokenRepository;
 import com.dreamflow.mysocial.member.dto.MemberDto;
 import com.dreamflow.mysocial.member.entity.Member;
-import com.dreamflow.mysocial.member.entity.Password;
 import com.dreamflow.mysocial.member.exception.MemberErrorCode;
 import com.dreamflow.mysocial.member.repository.MemberRepository;
 import com.dreamflow.mysocial.post.entity.Post;
@@ -19,15 +18,16 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 
-import static com.dreamflow.mysocial.member.entity.Password.ENCODER;
+import java.util.Objects;
+
+import static com.dreamflow.mysocial.member.entity.Member.ENCODER;
+import static com.dreamflow.mysocial.member.entity.Member.Role.USER;
 
 @Service
 @Builder
 @RequiredArgsConstructor
-@Transactional
 public class MemberService {
     private final MemberRepository memberRepository;
     private final TokenProvider tokenProvider;
@@ -38,22 +38,18 @@ public class MemberService {
         validateDuplicateMember(signUpRequest.getEmail());
         Member member = Member.builder()
                 .email(signUpRequest.getEmail())
-                .password(Password.encrypt(signUpRequest.getPassword(), ENCODER))
+                .password(ENCODER.encode(signUpRequest.getPassword()))
                 .name(signUpRequest.getName())
+                .role(USER)
                 .build();
         return memberRepository.save(member);
     }
 
     public Token signIn(MemberDto.SignInRequest signInRequest) {
         Member findMember = memberRepository.findByEmail(signInRequest.getEmail());
-        comparePassword(signInRequest.getPassword(),findMember.getPassword());
-        Token token = generateToken(findMember.getId(), findMember.getEmail(), findMember.getPassword().getValue());
-        String role = findMember.getAuthority().getAuthority();
-        if (role.equals("USER")) {
-            token.setMode(1);
-        } else {
-            token.setMode(0);
-        }
+        comparePassword(signInRequest.getPassword(), findMember.getPassword());
+        Token token = generateToken(findMember.getId(), findMember.getEmail(), signInRequest.getPassword());
+        System.out.println("token = " + token);
         return token;
     }
 
@@ -77,7 +73,7 @@ public class MemberService {
 
         Token token = tokenProvider.createToken(authentication);
         token.setMemId(id);
-
+        System.out.println("token = " + token);
         tokenRepository.save(token);
 
         HttpHeaders httpHeaders = new HttpHeaders();
@@ -92,8 +88,8 @@ public class MemberService {
         }
     }
 
-    private void comparePassword(String password, Password memPassword) {
-        if(!memPassword.isSamePassword(password, ENCODER)) {
+    private void comparePassword(String password, String memPassword) {
+        if(!ENCODER.matches(password, memPassword)) {
             throw BaseException.type(MemberErrorCode.PASSWORD_MISMATCH);
         }
     }
@@ -108,4 +104,6 @@ public class MemberService {
         return memberRepository.findById(id)
                 .orElseThrow(() -> BaseException.type(MemberErrorCode.NOT_FOUND_MEMBER));
     }
+
+
 }

@@ -19,7 +19,7 @@ public class UserDetailDto {
     public UserDetailDto(Member member){
         this.id = member.getId();
         this.email = member.getEmail();
-        this.password = member.getPassword().getValue();
-        this.roles = List.of(member.getRole());
+        this.password = member.getPassword();
+        this.roles = List.of(member.getRole().toString());
     }
 }

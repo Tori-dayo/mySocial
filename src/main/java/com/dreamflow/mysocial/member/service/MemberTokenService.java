@@ -27,9 +27,9 @@ public class MemberTokenService implements UserDetailsService {
         return new MemberDetails(new UserDetailDto(
                 member.getId(),
                 member.getEmail(),
-                member.getPassword().getValue(),
-                List.of(member.getAuthority().getAuthority())
-        ));
+                member.getPassword(),
+                List.of(member.getRole().toString()
+        )));
 
     }
 
