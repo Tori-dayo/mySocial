@@ -1,5 +1,7 @@
 package com.dreamflow.mysocial.content.entity;
 
+import com.dreamflow.mysocial.comment.entity.Comment;
+import com.dreamflow.mysocial.member.entity.Member;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,11 +25,11 @@ public class Content {
     @Column
     private String imageUrl;
 
-//    @OneToMany(mappedBy = "content")
-//    private List<Comment> comments;
-//
-//    @ManyToOne
-//    @JoinColumn(name = "member_id")
-//    private Member member;
+    @OneToMany(mappedBy = "content")
+    private List<Comment> comments;
+
+    @ManyToOne
+    @JoinColumn(name = "member_id")
+    private Member member;
 }
 

@@ -1,9 +1,13 @@
 package com.dreamflow.mysocial.member.entity;
 
+import com.dreamflow.mysocial.comment.entity.Comment;
+import com.dreamflow.mysocial.content.entity.Content;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import java.util.List;
 
 
 @Entity @Builder
@@ -11,6 +15,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 public class Member {
+    private static final String PASSWORD_PATTERN = "^(?=.*[a-zA-Z])(?=.*[!@#$%^&*+=-])(?=.*[0-9]).{8,12}$";
+    public static final PasswordEncoder ENCODER = new BCryptPasswordEncoder();
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -18,7 +25,7 @@ public class Member {
     @Column(unique = true)
     private String email;
 
-
+    @Column
     private String password;
 
     private String name;
@@ -31,9 +38,7 @@ public class Member {
         USER;
     }
 
-    private static final String PASSWORD_PATTERN = "^(?=.*[a-zA-Z])(?=.*[!@#$%^&*+=-])(?=.*[0-9]).{8,12}$";
 
-    public static final PasswordEncoder ENCODER = new BCryptPasswordEncoder();
 
     public static String encrypt(String value, PasswordEncoder encoder) {
         validatePassword(value);
@@ -50,8 +55,9 @@ public class Member {
         return !password.matches(PASSWORD_PATTERN);
     }
 
+    @OneToMany(mappedBy = "member")
+    private List<Content> contents;
 
-
-
-
+    @OneToMany(mappedBy = "member")
+    private List<Comment> comments;
 }
