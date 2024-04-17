@@ -2,8 +2,6 @@ package com.dreamflow.mysocial.follow.mapper;
 
 import com.dreamflow.mysocial.follow.dto.FollowDto;
 import com.dreamflow.mysocial.follow.entity.Follow;
-import org.mapstruct.Mapper;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 @Component
 public class FollowMapper {

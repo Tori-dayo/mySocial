@@ -1,7 +1,6 @@
 package com.dreamflow.mysocial.follow.entity;
 
 import com.dreamflow.mysocial.member.entity.Member;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

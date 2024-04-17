@@ -4,7 +4,6 @@ import com.dreamflow.mysocial.member.entity.Member;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.List;
 

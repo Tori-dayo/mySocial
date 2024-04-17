@@ -1,7 +1,6 @@
 package com.dreamflow.mysocial.member.dto;
 
 import com.dreamflow.mysocial.content.dto.ContentDto;
-import com.dreamflow.mysocial.content.entity.Content;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

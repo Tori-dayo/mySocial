@@ -9,7 +9,6 @@ import com.dreamflow.mysocial.global.common.CurrentUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,8 +19,8 @@ public class FollowController {
     @PostMapping("/follow/{memberId}")
     public BaseResponse<String> follow(@PathVariable Long memberId, @CurrentUser Long loginId) {
         Follow follow = followService.createFollow(memberId, loginId);
-        String result = String.valueOf(follow.getToMember());
-        return new BaseResponse<>(result + "팔로우 성공");
+        String result = follow.getToMember().getName() + "님을 팔로우 하였습니다.";
+        return new BaseResponse<>(result);
     }
 
     @GetMapping("/follow/{memberId}")
