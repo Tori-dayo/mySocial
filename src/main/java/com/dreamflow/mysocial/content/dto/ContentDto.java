@@ -23,8 +23,7 @@ public class ContentDto {
         private String content;
         private String imageUrl;
     }
-    @Getter
-    @Setter
+    @Getter @Setter
     @AllArgsConstructor
     @NoArgsConstructor
     public static class Response{
@@ -34,8 +33,7 @@ public class ContentDto {
         private List<CommentDto.ResponseList> comments;
     }
 
-    @Getter
-    @Setter
+    @Getter @Setter
     @AllArgsConstructor
     @NoArgsConstructor
     public static class ListResponse{

@@ -3,12 +3,15 @@ package com.dreamflow.mysocial.comment.entity;
 import com.dreamflow.mysocial.content.entity.Content;
 import com.dreamflow.mysocial.member.entity.Member;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Data
+@Data @Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

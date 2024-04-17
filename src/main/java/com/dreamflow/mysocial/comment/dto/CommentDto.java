@@ -7,27 +7,23 @@ import lombok.Setter;
 
 public class CommentDto {
     @Getter
-    @AllArgsConstructor
     @NoArgsConstructor
     public static class Post{
         private String commentContent;
     }
     @Getter
-    @AllArgsConstructor
     @NoArgsConstructor
     public static class Patch{
         private String commentContent;
     }
-    @Getter
-    @Setter
+    @Getter @Setter
     @AllArgsConstructor
     @NoArgsConstructor
     public static class Response{
         private Long id;
         private String commentContent;
     }
-    @Getter
-    @Setter
+    @Getter @Setter
     @AllArgsConstructor
     @NoArgsConstructor
     public static class ResponseList{

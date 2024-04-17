@@ -30,30 +30,27 @@ public class FollowController {
 
     @GetMapping("/follow/{memberId}")
     public BaseResponse<List<FollowDto.followingResponse>> getFollowList(@PathVariable Long memberId) {
-        // 팔로잉 목록을 가져옵니다.
+        // 팔로잉 목록을 가져옴.
         List<Follow> followList = followService.getFollowList(memberId);
 
-        // 팔로잉 목록을 기반으로 팔로잉 응답 리스트를 생성합니다.
+        // 팔로잉 목록을 기반으로 팔로잉 응답 리스트를 생성함.
         List<FollowDto.followingResponse> response = new ArrayList<>();
         for (Follow follow : followList) {
-            // 각 팔로잉에 대한 응답을 생성하여 리스트에 추가합니다.
+            // 각 팔로잉에 대한 응답을 생성하여 리스트에 추가함.
             FollowDto.followingResponse followingResponse = new FollowDto.followingResponse();
-            followingResponse.setId(follow.getId());
-            followingResponse.setMemberId(follow.getToMember().getId());
-            followingResponse.setName(follow.getToMember().getName());
             response.add(followingResponse);
         }
 
-        // 팔로잉 응답 리스트를 BaseResponse에 담아 반환합니다.
+        // 팔로잉 응답 리스트를 BaseResponse에 담아 반환함.
         return new BaseResponse<>(response);
     }
 
     @GetMapping("/follower/{memberId}")
     public BaseResponse<List<FollowDto.followerResponse>> getFollowerList(@PathVariable Long memberId) {
-        // 팔로워 목록을 가져옵니다.
+        // 팔로워 목록을 가져온다.
         List<Follow> followList = followService.getFollowerList(memberId);
 
-        // 팔로워 목록을 기반으로 팔로워 응답 리스트를 생성합니다.
+        // 팔로워 목록을 기반으로 팔로워 응답 리스트를 생성한다.
         List<FollowDto.followerResponse> response = new ArrayList<>();
         for (Follow follow : followList) {
             // 각 팔로워에 대한 응답을 생성하여 리스트에 추가합니다.

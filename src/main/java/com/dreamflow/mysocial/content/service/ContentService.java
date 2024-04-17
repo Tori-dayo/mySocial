@@ -3,6 +3,7 @@ package com.dreamflow.mysocial.content.service;
 import com.dreamflow.mysocial.content.entity.Content;
 import com.dreamflow.mysocial.content.exception.ContentErrorCode;
 import com.dreamflow.mysocial.content.repository.ContentRepository;
+import com.dreamflow.mysocial.follow.entity.Follow;
 import com.dreamflow.mysocial.follow.repository.FollowRepository;
 import com.dreamflow.mysocial.global.exception.BaseException;
 import com.dreamflow.mysocial.member.entity.Member;
@@ -41,19 +42,18 @@ public class ContentService {
         return contentRepository.save(findContent);
     }
 
+    //특정 게시글을 불러오는 메서드
     public Content findContent(Long id) {
         return findVerifiedContent(id);
     }
 
+    //피드에 팔로우 한 사용자들의 글만 불러오는 메서드
     public List<Content> findFeedContents(Long memberId) {
-    List<Long> followIds = followRepository.findByFromMember(memberService.findVerifiedMember(memberId)).stream()
-            .map(follow -> follow.getToMember().getId())
-            .toList();
+        List<Member> followedMembers = getFollowedMembers(memberId);
 
-    List<Content> feedContents = new ArrayList<>();
+        List<Content> feedContents = new ArrayList<>();
 
-        for (Long followId : followIds) {
-            Member followedMember = memberService.findVerifiedMember(followId);
+        for (Member followedMember : followedMembers) {
             List<Content> followedMemberContents = contentRepository.findByMember(followedMember);
             feedContents.addAll(followedMemberContents);
         }
@@ -61,6 +61,7 @@ public class ContentService {
         return feedContents;
     }
 
+    //특정 사용자의 모든 글 리스트를 불러오는 메서드
     public List<Content> findContents(Long memberId) {
         return new ArrayList<>(contentRepository.findByMemberId(memberId));
     }
@@ -72,5 +73,13 @@ public class ContentService {
     public Content findVerifiedContent(Long id) {
         return contentRepository.findById(id)
                 .orElseThrow(() -> BaseException.type(ContentErrorCode.NOT_FOUND_CONTENT));
+    }
+
+    //팔로우 한 멤버들의 리스트를 가져오는 메서드
+    private List<Member> getFollowedMembers(Long memberId) {
+        Member member = memberService.findVerifiedMember(memberId);
+        return followRepository.findByFromMember(member).stream()
+                .map(Follow::getToMember)
+                .collect(Collectors.toList());
     }
 }

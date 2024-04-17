@@ -24,7 +24,6 @@ import static com.dreamflow.mysocial.member.entity.Member.Role.USER;
 import static com.dreamflow.mysocial.member.entity.Password.ENCODER;
 
 @Service
-@Builder
 @RequiredArgsConstructor
 public class MemberService {
     private final MemberRepository memberRepository;

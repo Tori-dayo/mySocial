@@ -1,7 +1,9 @@
 package com.dreamflow.mysocial.follow.service;
 
 import com.dreamflow.mysocial.follow.entity.Follow;
+import com.dreamflow.mysocial.follow.exception.FollowErrorCode;
 import com.dreamflow.mysocial.follow.repository.FollowRepository;
+import com.dreamflow.mysocial.global.exception.BaseException;
 import com.dreamflow.mysocial.member.entity.Member;
 import com.dreamflow.mysocial.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -20,9 +22,9 @@ public class FollowService {
 
     public Follow createFollow(Long followId, Long loginId) {
         if (followId.equals(loginId)) {
-            throw new IllegalArgumentException("자기 자신을 팔로우 할 수 없습니다.");
+            throw new BaseException(FollowErrorCode.SELF_FOLLOW);
         } else if (isDuplicateFollow(loginId, followId)) {
-            throw new IllegalArgumentException("이미 팔로우 중입니다.");
+            throw new BaseException(FollowErrorCode.ALREADY_FOLLOWING);
         }
 
         Follow follow = Follow.builder()
@@ -44,7 +46,7 @@ public class FollowService {
         Optional<Follow> follow = followRepository.findByFromMemberAndToMember(memberService.findVerifiedMember(loginId),
                 memberService.findVerifiedMember(followId));
         if(follow.isEmpty()) {
-            throw new IllegalArgumentException("팔로우 중이 아닙니다.");
+            throw new BaseException(FollowErrorCode.NOT_FOUND_FOLLOW);
         }
 
     }
