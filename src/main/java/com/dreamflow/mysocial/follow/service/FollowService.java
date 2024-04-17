@@ -48,6 +48,7 @@ public class FollowService {
         if(follow.isEmpty()) {
             throw new BaseException(FollowErrorCode.NOT_FOUND_FOLLOW);
         }
+        followRepository.delete(follow.get());
 
     }
     public boolean isDuplicateFollow(Long fromMemberId, Long toMemberId) {

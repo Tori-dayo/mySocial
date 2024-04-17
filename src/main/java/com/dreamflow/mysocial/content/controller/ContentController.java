@@ -20,6 +20,7 @@ public class ContentController {
     private final ContentService contentService;
     private final ContentMapper contentMapper;
 
+    //Postman -> Body에서 form-data로 설정 후, [key = post , value = JSON , Content-Type = Application/Json] 으로 설정
     @PostMapping("/create")
     public BaseResponse<ContentDto.Response> createContent(@RequestPart ContentDto.Post post,
                                                            @RequestPart(value = "image", required = false) MultipartFile image,

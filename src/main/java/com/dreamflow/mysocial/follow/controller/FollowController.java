@@ -7,10 +7,7 @@ import com.dreamflow.mysocial.follow.service.FollowService;
 import com.dreamflow.mysocial.global.common.BaseResponse;
 import com.dreamflow.mysocial.global.common.CurrentUser;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +17,6 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class FollowController {
     private final FollowService followService;
-
     @PostMapping("/follow/{memberId}")
     public BaseResponse<String> follow(@PathVariable Long memberId, @CurrentUser Long loginId) {
         Follow follow = followService.createFollow(memberId, loginId);
@@ -30,39 +26,25 @@ public class FollowController {
 
     @GetMapping("/follow/{memberId}")
     public BaseResponse<List<FollowDto.followingResponse>> getFollowList(@PathVariable Long memberId) {
-        // 팔로잉 목록을 가져옴.
         List<Follow> followList = followService.getFollowList(memberId);
-
-        // 팔로잉 목록을 기반으로 팔로잉 응답 리스트를 생성함.
-        List<FollowDto.followingResponse> response = new ArrayList<>();
-        for (Follow follow : followList) {
-            // 각 팔로잉에 대한 응답을 생성하여 리스트에 추가함.
-            FollowDto.followingResponse followingResponse = new FollowDto.followingResponse();
-            response.add(followingResponse);
-        }
-
-        // 팔로잉 응답 리스트를 BaseResponse에 담아 반환함.
+        List<FollowDto.followingResponse> response = followList.stream()
+                .map(FollowMapper::toResponseFollowing)
+                .collect(Collectors.toList());
         return new BaseResponse<>(response);
     }
 
     @GetMapping("/follower/{memberId}")
     public BaseResponse<List<FollowDto.followerResponse>> getFollowerList(@PathVariable Long memberId) {
-        // 팔로워 목록을 가져온다.
         List<Follow> followList = followService.getFollowerList(memberId);
-
-        // 팔로워 목록을 기반으로 팔로워 응답 리스트를 생성한다.
-        List<FollowDto.followerResponse> response = new ArrayList<>();
-        for (Follow follow : followList) {
-            // 각 팔로워에 대한 응답을 생성하여 리스트에 추가합니다.
-            FollowDto.followerResponse followerResponse = new FollowDto.followerResponse();
-            followerResponse.setId(follow.getId());
-            followerResponse.setMemberId(follow.getFromMember().getId());
-            followerResponse.setName(follow.getFromMember().getName());
-            response.add(followerResponse);
-        }
-
-        // 팔로워 응답 리스트를 BaseResponse에 담아 반환합니다.
+        List<FollowDto.followerResponse> response = followList.stream()
+                .map(FollowMapper::toResponseFollower)
+                .collect(Collectors.toList());
         return new BaseResponse<>(response);
     }
 
+    @DeleteMapping("/follow/{memberId}")
+    public BaseResponse<String> deleteFollow(@PathVariable Long memberId, @CurrentUser Long loginId) {
+        followService.deleteFollow(memberId, loginId);
+        return new BaseResponse<>("팔로우 취소 성공");
+    }
 }
