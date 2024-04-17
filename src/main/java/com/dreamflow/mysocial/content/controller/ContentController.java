@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -44,4 +45,9 @@ public class ContentController {
         contentService.deleteContent(id);
     }
 
+    @GetMapping("/user")
+    public BaseResponse<List<ContentDto.Response>> findUserContents(@CurrentUser Long id) {
+        List<Content> userContents = contentService.findFeedContents(id);
+        return new BaseResponse<>(contentMapper.ContentToListResponseDto(userContents));
+    }
 }
