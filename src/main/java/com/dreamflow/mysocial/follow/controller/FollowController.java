@@ -14,16 +14,17 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/follow")
 public class FollowController {
     private final FollowService followService;
-    @PostMapping("/follow/{memberId}")
+    @PostMapping("/{memberId}")
     public BaseResponse<String> follow(@PathVariable Long memberId, @CurrentUser Long loginId) {
         Follow follow = followService.createFollow(memberId, loginId);
         String result = follow.getToMember().getName() + "님을 팔로우 하였습니다.";
         return new BaseResponse<>(result);
     }
 
-    @GetMapping("/follow/{memberId}")
+    @GetMapping("/{memberId}")
     public BaseResponse<List<FollowDto.followingResponse>> getFollowList(@PathVariable Long memberId) {
         List<Follow> followList = followService.getFollowList(memberId);
         List<FollowDto.followingResponse> response = followList.stream()
@@ -41,7 +42,7 @@ public class FollowController {
         return new BaseResponse<>(response);
     }
 
-    @DeleteMapping("/follow/{memberId}")
+    @DeleteMapping("/{memberId}")
     public BaseResponse<String> deleteFollow(@PathVariable Long memberId, @CurrentUser Long loginId) {
         followService.deleteFollow(memberId, loginId);
         return new BaseResponse<>("팔로우 취소 성공");

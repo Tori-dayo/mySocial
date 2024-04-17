@@ -1,6 +1,7 @@
 package com.dreamflow.mysocial.member.controller;
 
 import com.dreamflow.mysocial.global.common.BaseResponse;
+import com.dreamflow.mysocial.global.common.CurrentUser;
 import com.dreamflow.mysocial.jwt.entity.Token;
 import com.dreamflow.mysocial.member.dto.MemberDto;
 import com.dreamflow.mysocial.member.entity.Member;
@@ -36,8 +37,8 @@ public class MemberController {
         return ResponseEntity.ok(memberService.withdrawal(id));
     }
 
-    @GetMapping("/members/{id}")
-    public BaseResponse<MemberDto.Response> findMember(@PathVariable Long id) {
+    @GetMapping("/members")
+    public BaseResponse<MemberDto.Response> findMember(@CurrentUser Long id) {
 
         return new BaseResponse<>(memberMapper.MemberToMemberResponseDto(memberService.findMember(id)));
     }

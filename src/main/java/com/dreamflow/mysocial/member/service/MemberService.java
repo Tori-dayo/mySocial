@@ -45,7 +45,6 @@ public class MemberService {
         Member findMember = memberRepository.findByEmail(signInRequest.getEmail());
         comparePassword(signInRequest.getPassword(), findMember.getPassword());
         Token token = generateToken(findMember.getId(), findMember.getEmail(), signInRequest.getPassword());
-        System.out.println("token = " + token);
         return token;
     }
 
