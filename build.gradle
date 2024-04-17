@@ -22,14 +22,22 @@ repositories {
 }
 
 dependencies {
+
+	//Starter Dependencies
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-hateoas'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	compileOnly 'org.projectlombok:lombok'
-	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-	runtimeOnly 'com.h2database:h2'
-	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	//devtools
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+	//h2 Database
+	runtimeOnly 'com.h2database:h2'
+
+	//lombok
+	annotationProcessor 'org.projectlombok:lombok'
+	compileOnly 'org.projectlombok:lombok'
 
 	//Security
 	testImplementation 'org.springframework.security:spring-security-test'
@@ -43,10 +51,6 @@ dependencies {
 	implementation group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.5'
 	runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.11.5'
 	runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.5'
-
-	// Web3
-	implementation 'org.web3j:core:4.8.0'
-
 
 }
 
