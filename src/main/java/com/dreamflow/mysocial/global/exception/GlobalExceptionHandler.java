@@ -25,7 +25,7 @@ public class GlobalExceptionHandler {
         final ErrorCode code = e.getCode();
 
         log.warn(
-                "Databank Application Exception Occurred -> {} | {} | {}",
+                "SNS Application Exception Occurred -> {} | {} | {}",
                 code.getStatus(),
                 code.getCode(),
                 code.getMessage(),

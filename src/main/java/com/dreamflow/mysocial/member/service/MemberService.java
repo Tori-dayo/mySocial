@@ -19,10 +19,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 
-import java.util.Objects;
 
-import static com.dreamflow.mysocial.member.entity.Member.ENCODER;
 import static com.dreamflow.mysocial.member.entity.Member.Role.USER;
+import static com.dreamflow.mysocial.member.entity.Password.ENCODER;
 
 @Service
 @Builder

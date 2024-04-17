@@ -34,7 +34,7 @@ import java.security.Key;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static com.dreamflow.mysocial.member.entity.Member.ENCODER;
+import static com.dreamflow.mysocial.member.entity.Password.ENCODER;
 
 @Component
 @RequiredArgsConstructor

@@ -36,7 +36,7 @@ public class MemberController {
         return ResponseEntity.ok(memberService.withdrawal(id));
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/member/{id}")
     public BaseResponse<MemberDto.Response> findMember(@PathVariable Long id) {
 
         return new BaseResponse<>(memberMapper.MemberToMemberResponseDto(memberService.findMember(id)));

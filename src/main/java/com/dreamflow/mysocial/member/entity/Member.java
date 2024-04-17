@@ -2,11 +2,9 @@ package com.dreamflow.mysocial.member.entity;
 
 import com.dreamflow.mysocial.comment.entity.Comment;
 import com.dreamflow.mysocial.content.entity.Content;
+import com.dreamflow.mysocial.follow.entity.Follow;
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-
 import java.util.List;
 
 
@@ -15,9 +13,6 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 public class Member {
-    private static final String PASSWORD_PATTERN = "^(?=.*[a-zA-Z])(?=.*[!@#$%^&*+=-])(?=.*[0-9]).{8,12}$";
-    public static final PasswordEncoder ENCODER = new BCryptPasswordEncoder();
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -38,26 +33,19 @@ public class Member {
         USER;
     }
 
-
-
-    public static String encrypt(String value, PasswordEncoder encoder) {
-        validatePassword(value);
-        return encoder.encode(value);
-    }
-
-    private static void validatePassword(String value) {
-        if (isNotValidPattern(value)) {
-            throw new RuntimeException();
-        }
-    }
-
-    private static boolean isNotValidPattern(String password) {
-        return !password.matches(PASSWORD_PATTERN);
-    }
-
+    // Member와 Content는 1:N 관계
     @OneToMany(mappedBy = "member")
     private List<Content> contents;
 
+    // Member와 Comment는 1:N 관계
     @OneToMany(mappedBy = "member")
     private List<Comment> comments;
+
+    // Member와 Follow는 1:N 관계 (fromMember)
+    @OneToMany(mappedBy = "fromMember")
+    private List<Follow> fromMembers;
+
+    // Member와 Follow는 1:N 관계 (toMember)
+    @OneToMany(mappedBy = "toMember")
+    private List<Follow> toMembers;
 }
